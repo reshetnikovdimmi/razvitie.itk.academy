@@ -1,26 +1,29 @@
 package ru.example.stringBuilder;
 
+import java.util.LinkedList;
+
 public class CreatorStringBuilder {
 
-    private StringBuilder currentText;
+    private static final int MAX_HISTORY_SIZE = 100;
+    private final LinkedList<KeeperStringBuilder> history = new LinkedList<>();
 
-    public CreatorStringBuilder() {
-        this.currentText = new StringBuilder();
-    }
+    //save() позволяет нам создать стек объектов.
 
-    public StringBuilder currentText() {
-        return currentText;
-    }
-
-    //save() позволяет нам создать объект.
-
-    public KeeperStringBuilder save() {
-        return new KeeperStringBuilder(currentText.toString());
+    public void save(String currentText) {
+        if (history.size() == MAX_HISTORY_SIZE) history.removeLast();
+        history.addFirst(new KeeperStringBuilder(currentText));
     }
 
     //restore() использует его для восстановления предыдущего состояния.
 
-    public void restore(KeeperStringBuilder save) {
-        currentText = new StringBuilder(save.getText());
+    public KeeperStringBuilder restore() {
+        if (!history.isEmpty()) history.removeFirst();
+        return history.isEmpty() ? null : history.getFirst();
     }
+    //вся история
+    public LinkedList<KeeperStringBuilder> allHistory() {
+        return history.isEmpty() ? null : history;
+    }
+
+
 }
