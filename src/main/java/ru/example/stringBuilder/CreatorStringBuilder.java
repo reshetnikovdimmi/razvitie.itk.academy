@@ -1,11 +1,12 @@
 package ru.example.stringBuilder;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class CreatorStringBuilder {
 
     private static final int MAX_HISTORY_SIZE = 100;
-    private final LinkedList<KeeperStringBuilder> history = new LinkedList<>();
+    private final Stack<KeeperStringBuilder> history = new Stack<>();
 
     //save() позволяет нам создать стек объектов.
 
@@ -21,9 +22,10 @@ public class CreatorStringBuilder {
         return history.isEmpty() ? null : history.getFirst();
     }
     //вся история
-    public LinkedList<KeeperStringBuilder> allHistory() {
+    public Stack<KeeperStringBuilder> allHistory() {
         return history.isEmpty() ? null : history;
     }
 
 
 }
+
